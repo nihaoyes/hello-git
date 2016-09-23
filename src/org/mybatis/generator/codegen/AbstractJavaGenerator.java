@@ -49,8 +49,7 @@
      method.setVisibility(JavaVisibility.PUBLIC);
      method.setReturnType(fqjt);
      method.setName(JavaBeansUtil.getGetterMethodName(property, fqjt));
-     this.context.getCommentGenerator().addGetterComment(method, 
-       this.introspectedTable, introspectedColumn);
+     this.context.getCommentGenerator().addGetterComment(method,this.introspectedTable, introspectedColumn);
      
      StringBuilder sb = new StringBuilder();
      sb.append("return ");
@@ -70,8 +69,7 @@
      field.setVisibility(JavaVisibility.PRIVATE);
      field.setType(fqjt);
      field.setName(property);
-     this.context.getCommentGenerator().addFieldComment(field, 
-       this.introspectedTable, introspectedColumn);
+     this.context.getCommentGenerator().addFieldComment(field,this.introspectedTable, introspectedColumn);
      
      return field;
    }
@@ -111,10 +109,8 @@
    }
    
    public boolean isTrimStringsEnabled() {
-     Properties properties = this.context
-       .getJavaModelGeneratorConfiguration().getProperties();
-     boolean rc = StringUtility.isTrue(properties
-       .getProperty("trimStrings"));
+     Properties properties = this.context.getJavaModelGeneratorConfiguration().getProperties();
+     boolean rc = StringUtility.isTrue(properties.getProperty("trimStrings"));
      return rc;
    }
    

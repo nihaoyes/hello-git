@@ -61,7 +61,6 @@
        if (!RootClassInfo.getInstance(rootClass, this.warnings).containsProperty(introspectedColumn))
        {
  
- 
          Field field = getJavaBeansField(introspectedColumn);
          if (plugins.modelFieldGenerated(field, topLevelClass, 
            introspectedColumn, this.introspectedTable, 

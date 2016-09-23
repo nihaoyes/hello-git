@@ -142,8 +142,7 @@ import java.io.InputStream;
      
      IClasspathEntry[] oldPaths = iJavaProject.readRawClasspath();
      
-     IClasspathEntry checkPaths = JavaCore.newLibraryEntry(project.getFile(
-       des).getFullPath(), null, null, false);
+     IClasspathEntry checkPaths = JavaCore.newLibraryEntry(project.getFile(des).getFullPath(), null, null, false);
      if (classPathExists(oldPaths, checkPaths))
      {
        return;
@@ -286,9 +285,6 @@ import java.io.InputStream;
    public static void copyFile(String file, String des, boolean b, IProject iProject)
    {
      boolean dir = false;
-     
- 
- 
      try
      {
        if (file.endsWith(".jar")) {

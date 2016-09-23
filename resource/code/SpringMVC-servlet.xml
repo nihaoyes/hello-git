@@ -11,6 +11,21 @@
 
     <context:component-scan base-package="com.control">
 	</context:component-scan>
-		
+	
+		<!-- mapper的批量扫描，从mapper包中扫描mapper接口，自动创建代理对象，注入到spring容器 -->  
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
+          
+        <!-- 通过这里配置对mapper接口的扫描，mybatis全局配置文件里对mapper的扫描就不需要配置了 。  
+        对mapper接口的扫描和代理对象的生成都由spring来管理了  
+        -->  
+        <property name="basePackage" value="mapper"/>  
+          
+        <!-- 这里name使用sqlSessionFactoryBeanName而不使用sqlSessionFactory，  
+        原因是MapperScannerConfigurer这个配置会先加载，如果使用sqlSessionFactory，那么数据源还没开始加载，  
+        MapperScannerConfigurer的加载就开始了，这会导致找不到数据源。所以需要使用sqlSessionFactoryBeanName  
+         -->  
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>  
+    </bean>  
+    
 	
 </beans>

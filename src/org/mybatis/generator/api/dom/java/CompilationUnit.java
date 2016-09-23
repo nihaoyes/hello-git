@@ -3,7 +3,7 @@ package org.mybatis.generator.api.dom.java;
 import java.util.List;
 import java.util.Set;
 
-public abstract interface CompilationUnit
+public  interface CompilationUnit
 {
   public abstract String getFormattedContent();
   

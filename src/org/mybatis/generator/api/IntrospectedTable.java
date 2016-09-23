@@ -464,19 +464,20 @@
      setSqlMapFullyQualifiedRuntimeTableName(calculateSqlMapFullyQualifiedRuntimeTableName());
      setSqlMapAliasedFullyQualifiedRuntimeTableName(calculateSqlMapAliasedFullyQualifiedRuntimeTableName());
      
+     String tableName = this.getTableConfiguration().getTableName();
      setCountByExampleStatementId("countByExample");
      setDeleteByExampleStatementId("deleteByExample");
      setDeleteByPrimaryKeyStatementId("deleteByPrimaryKey");
-     setInsertStatementId("insert");
-     setInsertSelectiveStatementId("insertSelective");
+     setInsertStatementId("insert"+tableName);
+     setInsertSelectiveStatementId("insert"+tableName+"Selective");
      setSelectByExampleStatementId("selectByExample");
      setSelectByExampleWithBLOBsStatementId("selectByExampleWithBLOBs");
-     setSelectByPrimaryKeyStatementId("selectByPrimaryKey");
+     setSelectByPrimaryKeyStatementId("select"+tableName+"ByID");
      setUpdateByExampleStatementId("updateByExample");
      setUpdateByExampleSelectiveStatementId("updateByExampleSelective");
      setUpdateByExampleWithBLOBsStatementId("updateByExampleWithBLOBs");
-     setUpdateByPrimaryKeyStatementId("updateByPrimaryKey");
-     setUpdateByPrimaryKeySelectiveStatementId("updateByPrimaryKeySelective");
+     setUpdateByPrimaryKeyStatementId("update"+tableName+"ByID");
+     setUpdateByPrimaryKeySelectiveStatementId("update"+tableName+"ByIDSelective");
      setUpdateByPrimaryKeyWithBLOBsStatementId("updateByPrimaryKeyWithBLOBs");
      setBaseResultMapId("BaseResultMap");
      setResultMapWithBLOBsId("ResultMapWithBLOBs");

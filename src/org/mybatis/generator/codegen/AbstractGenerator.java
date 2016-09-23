@@ -6,28 +6,6 @@
  import org.mybatis.generator.config.Context;
  
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
  public abstract class AbstractGenerator
  {
    protected Context context;

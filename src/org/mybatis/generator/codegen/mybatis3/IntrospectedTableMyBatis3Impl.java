@@ -33,15 +33,6 @@
  
  
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
  public class IntrospectedTableMyBatis3Impl
    extends IntrospectedTable
  {
@@ -61,8 +52,7 @@
    {
      calculateJavaModelGenerators(warnings, progressCallback);
      
-     AbstractJavaClientGenerator javaClientGenerator = 
-       calculateClientGenerators(warnings, progressCallback);
+     AbstractJavaClientGenerator javaClientGenerator = calculateClientGenerators(warnings, progressCallback);
      
      calculateXmlMapperGenerator(javaClientGenerator, warnings, progressCallback);
    }
@@ -76,8 +66,7 @@
        this.xmlMapperGenerator = javaClientGenerator.getMatchedXMLGenerator();
      }
      
-     initializeAbstractGenerator(this.xmlMapperGenerator, warnings, 
-       progressCallback);
+     initializeAbstractGenerator(this.xmlMapperGenerator, warnings, progressCallback);
    }
    
  
@@ -104,16 +93,19 @@
        return null;
      }
      
-     String type = this.context.getJavaClientGeneratorConfiguration()
-       .getConfigurationType();
+     String type = this.context.getJavaClientGeneratorConfiguration().getConfigurationType();
      AbstractJavaClientGenerator javaGenerator;
-   //  AbstractJavaClientGenerator javaGenerator;
+
      if ("XMLMAPPER".equalsIgnoreCase(type)) {
-       javaGenerator = new JavaMapperGenerator(); } else { 
+       javaGenerator = new JavaMapperGenerator();
+       } else { 
+    	   
        if ("MIXEDMAPPER".equalsIgnoreCase(type)) {
-         javaGenerator = new MixedClientGenerator(); } else { 
+         javaGenerator = new MixedClientGenerator(); 
+         } else { 
          if ("ANNOTATEDMAPPER".equalsIgnoreCase(type)) {
-           javaGenerator = new AnnotatedClientGenerator(); } else { 
+           javaGenerator = new AnnotatedClientGenerator(); 
+           } else { 
            if ("MAPPER".equalsIgnoreCase(type)) {
              javaGenerator = new JavaMapperGenerator();
            } else
@@ -174,34 +166,28 @@
    {
      List<GeneratedJavaFile> answer = new ArrayList();
      Iterator localIterator2;
-     for (Iterator localIterator1 = this.javaModelGenerators.iterator(); localIterator1.hasNext(); 
-        )
+     for (Iterator localIterator1 = this.javaModelGenerators.iterator(); localIterator1.hasNext();)
      {
        AbstractJavaGenerator javaGenerator = (AbstractJavaGenerator)localIterator1.next();
-       List<CompilationUnit> compilationUnits = javaGenerator  //获取相关 units
-         .getCompilationUnits();
+       List<CompilationUnit> compilationUnits = javaGenerator.getCompilationUnits(); //获取相关 units
        localIterator2 = compilationUnits.iterator();
        while( localIterator2.hasNext()){
     	   CompilationUnit compilationUnit = (CompilationUnit)localIterator2.next();
-           GeneratedJavaFile gjf = new GeneratedJavaFile(compilationUnit, 
-             this.context.getJavaModelGeneratorConfiguration()
-             .getTargetProject());  //相关联的java 生成器
+           GeneratedJavaFile gjf = new GeneratedJavaFile(compilationUnit,this.context.getJavaModelGeneratorConfiguration().getTargetProject());  //相关联的java 生成器
            answer.add(gjf);
        }
      
      }
      
  
-     for (Iterator localIterator3 = this.clientGenerators.iterator(); localIterator3.hasNext(); )
+     for (Iterator localIterator3 = this.clientGenerators.iterator(); localIterator3.hasNext(); ) //相关联的java Mapper 生成器
      {
        AbstractJavaGenerator javaGenerator = (AbstractJavaGenerator)localIterator3.next();
        List<CompilationUnit> compilationUnits = javaGenerator.getCompilationUnits();
        localIterator2 = compilationUnits.iterator();
        while(localIterator2.hasNext()){
     	   CompilationUnit compilationUnit = (CompilationUnit)localIterator2.next();
-           GeneratedJavaFile gjf = new GeneratedJavaFile(compilationUnit, 
-             this.context.getJavaClientGeneratorConfiguration()
-             .getTargetProject());
+           GeneratedJavaFile gjf = new GeneratedJavaFile(compilationUnit,this.context.getJavaClientGeneratorConfiguration().getTargetProject());
            answer.add(gjf);
        }
       
@@ -217,8 +203,7 @@
      
      if (this.xmlMapperGenerator != null) {
        Document document = this.xmlMapperGenerator.getDocument();
-       GeneratedXmlFile gxf = new GeneratedXmlFile(document, 
-         getMyBatis3XmlMapperFileName(), getMyBatis3XmlMapperPackage(), 
+       GeneratedXmlFile gxf = new GeneratedXmlFile(document,getMyBatis3XmlMapperFileName(), getMyBatis3XmlMapperPackage(), 
          this.context.getSqlMapGeneratorConfiguration().getTargetProject(), 
          true);
        if (this.context.getPlugins().sqlMapGenerated(gxf, this)) {

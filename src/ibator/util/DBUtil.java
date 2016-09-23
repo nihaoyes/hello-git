@@ -334,7 +334,8 @@ import org.mybatis.generator.internal.util.ClassloaderUtility;
  
    private static List<DBVO> vos = new ArrayList();
    
-   static { DBVO MYSQL = new DBVO();
+   static { 
+	   DBVO MYSQL = new DBVO();
      MYSQL.setDialect("MySQL");
      MYSQL.setName("MySQL");
      MYSQL.setDriver("com.mysql.jdbc.Driver");

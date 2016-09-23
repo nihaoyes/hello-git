@@ -8,7 +8,7 @@ import org.mybatis.generator.api.dom.java.InnerEnum;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-public abstract interface CommentGenerator
+public  interface CommentGenerator
 {
   public abstract void addConfigurationProperties(Properties paramProperties);
   
@@ -35,8 +35,3 @@ public abstract interface CommentGenerator
   public abstract void addRootComment(XmlElement paramXmlElement);
 }
 
-
-/* Location:              C:\Users\lenovo\Desktop\ibator_3.0.6.full.jar!\org\mybatis\generator\api\CommentGenerator.class
- * Java compiler version: 5 (49.0)
- * JD-Core Version:       0.7.1
- */

@@ -57,12 +57,11 @@
    
    public List<CompilationUnit> getCompilationUnits()
    {
-     this.progressCallback.startTask(
-       Messages.getString("Progress.17", this.introspectedTable.getFullyQualifiedTable().toString()));
+     this.progressCallback.startTask( Messages.getString("Progress.17", this.introspectedTable.getFullyQualifiedTable().toString()));
+     
      CommentGenerator commentGenerator = this.context.getCommentGenerator();
      
-     FullyQualifiedJavaType type = new FullyQualifiedJavaType(
-       this.introspectedTable.getMyBatis3JavaMapperType());
+     FullyQualifiedJavaType type = new FullyQualifiedJavaType(this.introspectedTable.getMyBatis3JavaMapperType());
      Interface interfaze = new Interface(type);
      interfaze.setVisibility(JavaVisibility.PUBLIC);
      commentGenerator.addJavaFileComment(interfaze);
@@ -101,8 +100,6 @@
      addDeleteByPrimaryKeyMethod(interfaze);
      addInsertMethod(interfaze);
      addInsertSelectiveMethod(interfaze);
-     
- 
      addSelectByPrimaryKeyMethod(interfaze);
      addUpdateByPrimaryKeySelectiveMethod(interfaze);
      addUpdateByPrimaryKeyWithBLOBsMethod(interfaze);
@@ -111,8 +108,7 @@
  
  
      List<CompilationUnit> answer = new ArrayList();
-     if (this.context.getPlugins().clientGenerated(interfaze, null, 
-       this.introspectedTable)) {
+     if (this.context.getPlugins().clientGenerated(interfaze, null,this.introspectedTable)) {
        answer.add(interfaze);
      }
      

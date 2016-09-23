@@ -71,8 +71,10 @@ public class RunIbatorThread
             jdbc.setPassword(Globar.global.getDbVo().getPassword());
             jdbc.setUserId(Globar.global.getDbVo().getUsername());
             context.setJdbcConnectionConfiguration(jdbc);
+            
             Connection con = ConnectionFactory.getInstance().getConnection(jdbc);
             String catalog = con.getCatalog();
+            
             if(Globar.tables.size() == 0)
             {
                 if(Globar.global.getDbVo().getDialect().startsWith("SQLServer"))
@@ -117,11 +119,14 @@ public class RunIbatorThread
 
             }
             context.setId("ibator");
+            
             JavaModelGeneratorConfiguration javaModelGeneratorConfiguration = new JavaModelGeneratorConfiguration();//table To javabean 配置
             javaModelGeneratorConfiguration.setTargetPackage(Globar.pojoPath);
             javaModelGeneratorConfiguration.setTargetProject(projectName);
             context.setJavaModelGeneratorConfiguration(javaModelGeneratorConfiguration);
-            JavaClientGeneratorConfiguration daoGeneratorConfiguration = new JavaClientGeneratorConfiguration();// DAO bean 配置
+            
+            
+            JavaClientGeneratorConfiguration daoGeneratorConfiguration = new JavaClientGeneratorConfiguration();// Mapper 配置
             daoGeneratorConfiguration.setTargetPackage(Globar.daoPath);
             daoGeneratorConfiguration.setTargetProject(projectName);
             String type = Globar.global.getDaoType();//选择的DAO类型
@@ -135,12 +140,17 @@ public class RunIbatorThread
                 daoGeneratorConfiguration.setConfigurationType("ANNOTATEDMAPPER");
             context.setJavaClientGeneratorConfiguration(daoGeneratorConfiguration);
             context.setTargetRuntime(org.mybatis.generator.api.IntrospectedTable.TargetRuntime.MYBATIS3.toString());//MYBATIS3
-            SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration = new SqlMapGeneratorConfiguration();//sql Mapper配置
+            
+            
+            SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration = new SqlMapGeneratorConfiguration();//sql xml配置
             sqlMapGeneratorConfiguration.setTargetPackage(Globar.xmlPath);
             sqlMapGeneratorConfiguration.setTargetProject(projectName);
             context.setSqlMapGeneratorConfiguration(sqlMapGeneratorConfiguration);
+            
+            
             CommentGeneratorConfiguration commentGeneratorConfiguration = new CommentGeneratorConfiguration();//字段注释配置？
             context.setCommentGeneratorConfiguration(commentGeneratorConfiguration);
+            
             if(Globar.global.isComment())
                 DefaultCommentGenerator.suppressAllComments = false;
             else
@@ -156,6 +166,7 @@ public class RunIbatorThread
             else
                 callback.setMergeSupported(true);
             SubMonitor spm = subMonitor.newChild(950);
+            
             MyBatisGenerator ibator = new MyBatisGenerator(config, callback, new ArrayList());
 //             开始生成代码
             ibator.generate(new EclipseProgressCallback(spm));

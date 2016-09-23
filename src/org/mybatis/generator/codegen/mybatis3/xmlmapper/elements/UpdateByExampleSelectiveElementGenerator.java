@@ -19,9 +19,7 @@
    {
      XmlElement answer = new XmlElement("update");
      
-     answer
-       .addAttribute(new Attribute(
-       "id", this.introspectedTable.getUpdateByExampleSelectiveStatementId()));
+     answer.addAttribute(new Attribute("id", this.introspectedTable.getUpdateByExampleSelectiveStatementId()));
      
      answer.addAttribute(new Attribute("parameterType", "map"));
      

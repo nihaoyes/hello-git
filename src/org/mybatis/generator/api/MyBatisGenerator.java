@@ -145,124 +145,116 @@
      callback.generationStarted(totalSteps);
      
      for (Context context : contextsToRun) {
-       context.generateFiles(callback, this.generatedJavaFiles, 
-         this.generatedXmlFiles, this.warnings);
+       context.generateFiles(callback, this.generatedJavaFiles,this.generatedXmlFiles, this.warnings); //获得文件生成类
      }
      
  
-     callback.saveStarted(this.generatedXmlFiles.size() + 
-       this.generatedJavaFiles.size());
+     callback.saveStarted(this.generatedXmlFiles.size() + this.generatedJavaFiles.size());
      
      Object list = new ArrayList();
      File dir = null;
      String source;
      //生成xml
-     for (GeneratedXmlFile gxf : this.generatedXmlFiles) {
-       this.projects.add(gxf.getTargetProject());
-       
-       File targetFile = null;
-       try
-       {
-         File directory = this.shellCallback.getDirectory( gxf.getTargetProject(), gxf.getTargetPackage());
-          targetFile = new File(directory, gxf.getFileName());
-         String path = gxf.getTargetPackage();
-         path = path.replaceAll("\\.", "/");
-         path = path + "/" + gxf.getFileName();
-         ((List)list).add(path);
-         dir = this.shellCallback.getDirectory(gxf.getTargetProject(), "");
-         
-         if (targetFile.exists())
-         {
-           if (this.shellCallback.isOverwriteEnabled()) {
-              source = gxf.getFormattedContent();
-             this.warnings.add(
-               Messages.getString("Warning.11", targetFile.getAbsolutePath()));
-           } else { 
-             if (this.shellCallback.isMergeSupported()) {
-               source = XmlFileMergerJaxp.getMergedSource(gxf, 
-                 targetFile);
-             } else {
-                source = gxf.getFormattedContent();
-               targetFile = getUniqueFileName(directory, 
-                 gxf.getFileName());
-               this.warnings.add(Messages.getString(
-                 "Warning.2", targetFile.getAbsolutePath()));
-             }
-           }
-         } else 
-        	 source = gxf.getFormattedContent();
-       } catch (ShellException e) {
-       
-         this.warnings.add(e.getMessage());
-         continue;
-       }
- 
-       callback.checkCancel();
-       callback.startTask(Messages.getString("Progress.15", targetFile.getName()));
-       writeFile(targetFile, source);
-     }
+	     for (GeneratedXmlFile gxf : this.generatedXmlFiles) {
+	       this.projects.add(gxf.getTargetProject());
+	       
+	       File targetFile = null;
+	       try
+	       {
+	         File directory = this.shellCallback.getDirectory( gxf.getTargetProject(), gxf.getTargetPackage());
+	          targetFile = new File(directory, gxf.getFileName());
+	         String path = gxf.getTargetPackage();
+	         path = path.replaceAll("\\.", "/");
+	         path = path + "/" + gxf.getFileName();
+	         ((List)list).add(path);
+	         dir = this.shellCallback.getDirectory(gxf.getTargetProject(), "");
+	         
+	         if (targetFile.exists())
+	         {
+	           if (this.shellCallback.isOverwriteEnabled()) {  //覆盖
+	              source = gxf.getFormattedContent();
+	             this.warnings.add( Messages.getString("Warning.11", targetFile.getAbsolutePath()));
+	           } else { 
+	             if (this.shellCallback.isMergeSupported()) { //混合
+	               source = XmlFileMergerJaxp.getMergedSource(gxf,targetFile);
+	             } else {   //新建
+	                source = gxf.getFormattedContent();
+	               targetFile = getUniqueFileName(directory,gxf.getFileName());
+	               this.warnings.add(Messages.getString("Warning.2", targetFile.getAbsolutePath()));
+	             }
+	           }
+	         } else 
+	        	 source = gxf.getFormattedContent();
+	       } catch (ShellException e) {
+	       
+	         this.warnings.add(e.getMessage());
+	         continue;
+	       }
+	 
+	       callback.checkCancel();
+	       callback.startTask(Messages.getString("Progress.15", targetFile.getName()));
+	       writeFile(targetFile, source);
+	     }
      String pojo = "";
      
      Object springDao = new ArrayList();
-     for (GeneratedJavaFile gjf : this.generatedJavaFiles) {
-       this.projects.add(gjf.getTargetProject());
-       
- 
-       if (gjf.getFileName().endsWith(Globar.daoName + ".java")) {
-         ((List)springDao).add(gjf.getFileName().replaceAll(".java", ""));
-       }
-       
- 
- 
-       try
-       {
-         File directory = this.shellCallback.getDirectory(
-           gjf.getTargetProject(), gjf.getTargetPackage());
-         dir = this.shellCallback.getDirectory(
-           gjf.getTargetProject(), "");
-         
-         File targetFile = new File(directory, gjf.getFileName());
-        if (targetFile.exists()) {
-           if (Globar.global.isOverride()) {
-              source = gjf.getFormattedContent();
-             this.warnings.add(
-               Messages.getString("Warning.11", targetFile.getAbsolutePath()));
-           } else { 
-             if (!Globar.global.isOverride()) {
-               source = this.shellCallback.mergeJavaFile(
-                 gjf.getFormattedContent(), 
-                 targetFile.getAbsolutePath(), 
-                 MergeConstants.OLD_ELEMENT_TAGS);
-             } else {
-                source = gjf.getFormattedContent();
-               targetFile = getUniqueFileName(directory, 
-                 gjf.getFileName());
-               this.warnings.add(Messages.getString(
-                 "Warning.2", targetFile.getAbsolutePath()));
-             }
-           }
-         } else { source = gjf.getFormattedContent();
-         }
-         
-         callback.checkCancel();
-         callback.startTask(Messages.getString(
-           "Progress.15", targetFile.getName()));
-         writeFile(targetFile, source);
-         
- 
-         String filename = targetFile.getName();
-         if ((!filename.endsWith(Globar.daoName + ".java")) && (!filename.endsWith("Example.java")) && (!filename.endsWith("Key.java")) && (!filename.endsWith("Provider.java"))) {
-           pojo = filename.substring(0, filename.lastIndexOf(".java"));
-         }
-       }
-       catch (ShellException e) {
-         this.warnings.add(e.getMessage());
-       }
-     }
+	     for (GeneratedJavaFile gjf : this.generatedJavaFiles) {
+	      
+	    	 this.projects.add(gjf.getTargetProject());	       
+	 
+	       if (gjf.getFileName().endsWith(Globar.daoName + ".java")) {
+	         ((List)springDao).add(gjf.getFileName().replaceAll(".java", ""));
+	       }
+	       
+	       try
+	       {
+	         File directory = this.shellCallback.getDirectory( gjf.getTargetProject(), gjf.getTargetPackage());
+	         dir = this.shellCallback.getDirectory(	 gjf.getTargetProject(), "");
+	         
+	         File targetFile = new File(directory, gjf.getFileName());
+	        if (targetFile.exists()) {
+	           if (Globar.global.isOverride()) {
+	              source = gjf.getFormattedContent();
+	             this.warnings.add(
+	               Messages.getString("Warning.11", targetFile.getAbsolutePath()));
+	           } else { 
+	             if (!Globar.global.isOverride()) {
+	               source = this.shellCallback.mergeJavaFile(
+	                 gjf.getFormattedContent(), 
+	                 targetFile.getAbsolutePath(), 
+	                 MergeConstants.OLD_ELEMENT_TAGS);
+	             } else {
+	                source = gjf.getFormattedContent();
+	               targetFile = getUniqueFileName(directory, 
+	                 gjf.getFileName());
+	               this.warnings.add(Messages.getString(
+	                 "Warning.2", targetFile.getAbsolutePath()));
+	             }
+	           }
+	         } else {
+	        	 source = gjf.getFormattedContent();
+	         }
+	         
+	         callback.checkCancel();
+	         callback.startTask(Messages.getString("Progress.15", targetFile.getName()));
+	         writeFile(targetFile, source);
+	         
+	 
+	         String filename = targetFile.getName();
+	         if ((!filename.endsWith(Globar.daoName + ".java")) && (!filename.endsWith("Example.java")) && (!filename.endsWith("Key.java")) && (!filename.endsWith("Provider.java"))) {
+	           pojo = filename.substring(0, filename.lastIndexOf(".java"));
+	         }
+	       }
+	       catch (ShellException e) {
+	         this.warnings.add(e.getMessage());
+	       }
+	     }
      
      IProject project = EclipseUI.project;
      
  
+     // 拷贝jar包及其他配置文件等
+     
  
      if (dir != null)
      {
@@ -317,21 +309,15 @@
      Util.copyFile("resource/lib/dtd1", "src", false, project);
      String dao = Globar.xmlPath;
      dao = dao.replaceAll("\\.", "/");
-     Util.copyFile("resource/lib/dtd2", "src/" + dao, 
-       false, project);
+     
+     Util.copyFile("resource/lib/dtd2", "src/" + dao,  false, project);
      
      Util.copyFile("resource/lib/log4j.properties", "src", false, project);
      
- 
- 
- 
      if ((Globar.spring) && (!Globar.ISSIMPLE)) {
        TestFileUtil.createTestFileWithSpring(project, pojo, "src/com/test/TestDAOWithSpring.java");
        ServiceFileCreate.createServiceWithSpring(project, pojo, "src/com/service/" + pojo + "Service.java");
-       
- 
        PageBeanUtil.getPageBean(project);
- 
      }
      else
      {
@@ -342,19 +328,14 @@
        }
      }
      
-     Util.copyFile("resource/lib/spring", des, true, 
-       project);
+     Util.copyFile("resource/lib/spring", des, true, project);
      
  
      if (Globar.isCache) {
-       Util.copyFile("resource/lib/cache", des, true, 
-         project);
+       Util.copyFile("resource/lib/cache", des, true, project);
      }
-     
  
- 
-     Util.copyFile("resource/lib/ibatis", des, true, 
-       project);
+     Util.copyFile("resource/lib/ibatis", des, true,project);
      Util.copyFile("resource/lib/jdbc", des, true, project);
      
  

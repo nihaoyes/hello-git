@@ -371,8 +371,7 @@ import org.mybatis.generator.internal.util.StringUtility;
    {
      this.pluginAggregator = new PluginAggregator();
      for (PluginConfiguration pluginConfiguration : this.pluginConfigurations) {
-       Plugin plugin = ObjectFactory.createPlugin(this, 
-         pluginConfiguration);
+       Plugin plugin = ObjectFactory.createPlugin(this,pluginConfiguration);
        if (plugin.validate(warnings)) {
          this.pluginAggregator.addPlugin(plugin);
        } else {
@@ -385,7 +384,7 @@ import org.mybatis.generator.internal.util.StringUtility;
        for (IntrospectedTable introspectedTable : this.introspectedTables) {
          callback.checkCancel();
          introspectedTable.initialize();
-         introspectedTable.calculateGenerators(warnings, callback);//获得 文件生成器
+         introspectedTable.calculateGenerators(warnings, callback);//获得 文件生成器    javaGenerator   xmlGenerator
          generatedJavaFiles.addAll(                            // java 文件生成
            introspectedTable.getGeneratedJavaFiles());
          generatedXmlFiles.addAll(                              //xml文件生成

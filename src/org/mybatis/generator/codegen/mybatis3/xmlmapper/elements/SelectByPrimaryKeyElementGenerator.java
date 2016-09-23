@@ -44,6 +44,8 @@
            ((IntrospectedColumn)this.introspectedTable.getPrimaryKeyColumns().get(0)).getFullyQualifiedJavaType().toString();
        }
      }
+   // 项目需要，参数全部为Map
+     parameterType="java.util.Map";
      
      answer.addAttribute(new Attribute("parameterType", 
        parameterType));

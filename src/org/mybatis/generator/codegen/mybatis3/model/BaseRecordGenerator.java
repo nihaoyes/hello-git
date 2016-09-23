@@ -132,17 +132,16 @@
      method.setConstructor(true);
      method.setName(topLevelClass.getType().getShortName());
      
-     List<IntrospectedColumn> constructorColumns = 
-       includeBLOBColumns() ? this.introspectedTable.getAllColumns() : 
-       this.introspectedTable.getNonBLOBColumns();
+     List<IntrospectedColumn> constructorColumns =includeBLOBColumns() ? this.introspectedTable.getAllColumns():this.introspectedTable.getNonBLOBColumns();
      
      for (IntrospectedColumn introspectedColumn : constructorColumns) {
-       method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(), 
-         introspectedColumn.getJavaProperty()));
+       method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(),introspectedColumn.getJavaProperty()));
      }
      
      StringBuilder sb = new StringBuilder();
-     Iterator localIterator2; if (this.introspectedTable.getRules().generatePrimaryKeyClass()) {
+     Iterator localIterator2; 
+     
+     if (this.introspectedTable.getRules().generatePrimaryKeyClass()) {
        boolean comma = false;
        sb.append("super(");
        

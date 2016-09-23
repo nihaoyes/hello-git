@@ -84,16 +84,16 @@
  
  
      addSelectByPrimaryKeyElement(answer);
-     addDeleteByPrimaryKeyElement(answer);
-     
+     addDeleteByPrimaryKeyElement(answer);     
      addInsertElement(answer);
      addInsertSelectiveElement(answer);
      addUpdateByPrimaryKeySelectiveElement(answer);
-     addUpdateByPrimaryKeyWithBLOBsElement(answer);
      addUpdateByPrimaryKeyWithoutBLOBsElement(answer);
      
- 
+     addUpdateByPrimaryKeyWithBLOBsElement(answer);
+   
      addFlushCach(answer);
+     
      return answer;
    }
    
